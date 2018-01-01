@@ -9,7 +9,50 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include "/home/ztyree/SoarSuite/include/sml_Client.h"
+
+using namespace sml;
 using namespace std;
+
+Kernel* Game::createKernel() {
+  Kernel* kernel = Kernel::CreateKernelInNewThread();
+  return kernel;
+}
+
+Agent* Game::createAgent(Kernel* &kernel) {
+  Agent* agent = kernel->CreateAgent("protoBJ");
+  agent->LoadProductions(
+  "/home/ztyree/Documents/SOAR/SOAR_Prototype/proto.soar");
+  int regEvent(kernel);
+  return agent;
+}
+
+int Game::regEvent(Kernel* &kernel, Agent* &agent) {
+  kernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);
+}
+
+void Game::handleUpdateEvent(smlUpdateEventId id, void* pUserData, Agent* agent, smlRunFlags runFlags) {
+  updateWorld(agent);
+}
+
+void Game::updateWorld(Agent* &agent) {
+
+  int numberCommands = agent->GetNumberCommands();
+  for (int i = 0; i < numberCommands; i++) {
+    Identifier* command = agent->GetCommand(i);
+
+    string name = command->GetCommandName();
+    string decision = command->GetParameterValue("decision");
+
+    command->AddStatusComplete();
+
+		if (name == "bet") {
+			cout << endl << (atoi(decision.c_str())) << endl;
+		} else if (name == "load") {
+			cout << endl << decision << endl;
+		}
+  }
+}
 
 // determine whether a string is a valid number
 inline bool is_number(const std::string& s)
@@ -80,20 +123,27 @@ void Game::LoadConfig(){
 // Hmm, maybe I'll add some encryption feature,
 // otherwise it's just too easy for the players to cheat
 void Game::LoadGame(){
+  char soarInput;
+
 	// first try to read from save.data
 	// Hmm, maybe I'll add some encryption feature,
 	// otherwise it's just too easy for the players to cheat
 	while(true){
 		cout<<"Load Last Saved Game?(y/n)";
-		string input;
-		cin>>input;
-		// prevent the ctrl+D hell
+
+    StringElement* se = pAgent->CreateStringWME(pAgent->GetInputLink(), "load", "?");
+    pAgent->RunSelfTilOutput();
+    pAgent->DestroyWME(se);
+    cout << soarInput << endl;
+		//string input;
+		//cin>>input;
+		//prevent the ctrl+D hell
 		if(cin.eof()){
 			cout << "Hate ctrl-D hell\n";
 			std::exit(EXIT_FAILURE);
 		}
-
-		if(input.compare("y")==0){
+/*
+		if(soarInput.compare("y")==0){
 			// User chooses to load saved game
 			ifstream file("save.dat");
 			if(file.good()){
@@ -129,6 +179,7 @@ void Game::LoadGame(){
 			cout<<"I didn't get that."<<endl;
 
 		}
+*/
 	}
 	PrintChipStatus();
 	return;
@@ -700,19 +751,27 @@ void Game::PrintChipStatus(){
 
 // prompt whether to exit. if player chooses to exit, return true
 bool Game::PromptExit(){
+  char soarInput;
+  pKernel->RegisterForUpdateEvent(
+    smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, &soarInput);
 	// prompt exit
 	// also let the player set a new bet if he chooses to contunue
-	string input;
 	int bet;
 	while(true){
 		cout << endl<<"Enter your bet(enter x to exit game),";
-		cin>>input;
-		// prevent the ctrl+D hell
+
+    StringElement* se = pAgent->CreateStringWME(pAgent->GetInputLink(), "bet", "?");
+    pAgent->RunSelfTilOutput();
+    pAgent->DestroyWME(se);
+    cout << soarInput << endl;
+    //cin>>input;
+    // prevent the ctrl+D hell
 		if(cin.eof()){
 			cout << "Hate ctrl-D hell\n";
 			std::exit(EXIT_FAILURE);
 		}
-		stringstream s(input);
+		//stringstream s(input);
+    /*
 		if(!(s>>bet)){
 			// the player entered a non-integer
 			if(s.str().compare("x")==0){
@@ -722,17 +781,19 @@ bool Game::PromptExit(){
 			}
 			cout<<"I didn't get that. Please enter an integer"<<endl;
 		}
-		else{
-			// the player entered a valid integer
-			// still need to check whether it's a valid bet
-			if(bet<=0){
-				cout<<"You must must bet at least 1 chip each hand!"<<endl;
-			}
-			else if(bet>player_.GetChips()){
-				cout<<"You must bet within your budget!"<<endl;
-			}
-			else break;
+    */
+		// the player entered a valid integer
+		// still need to check whether it's a valid bet
+/*
+    bet = atoi(input.c_str());
+		if(bet<=0){
+			cout<<"You must must bet at least 1 chip each hand!"<<endl;
 		}
+		else if(bet>player_.GetChips()){
+			cout<<"You must bet within your budget!"<<endl;
+		}
+		else break;
+*/
 	}
 	SetBet(bet);
 	cout <<endl;

@@ -3,6 +3,10 @@
 
 // Provide a class to simulate all the processes in a hand of the game
 #include "player.h"
+#include "/home/ztyree/SoarSuite/include/sml_Client.h"
+
+
+using namespace sml;
 
 enum GAMEMODE { kPlayerVSDealer=0, kSuperGamblerVSDealer};
 enum WHO{ kDealer=0, kPlayer, kBoth, kNeither};
@@ -92,6 +96,12 @@ private:
 	void SetWinner_WinningRate(Hand_Status & h_status);
 
 public:
+	Kernel* createKernel();
+	Agent* createAgent(Kernel* &kernel);
+	void updateWorld(Agent* &agent);
+	void handleUpdateEvent(smlUpdateEventId id, void* pUserData, Agent* agent, smlRunFlags runFlags);
+	int regEvent(smlUpdateEventId id, void handler, NULL);
+
 	Game():bet_(1), winner_(kNeither), shuffle_every_round_(false), split_limit_(3), split_number_(0), current_hand_(0), double_flag_(false),surrender_flag_(false){}
 
 	// load the game configuration file

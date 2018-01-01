@@ -1,9 +1,12 @@
 #include <iostream>
+#include <cstdlib>
 #include <string>
 #include "game.h"
+#include "/home/ztyree/SoarSuite/include/sml_Client.h"
 //#include "player.h"
 //#include "cards.h"
 using namespace std;
+using namespace sml;
 
 int main(){
 	Game mygame;
@@ -18,8 +21,8 @@ int main(){
 			// No blackjack found in  the Start Round
 			mygame.GameLoop();
 		}
-		mygame.CloseGame();	
-		
+		mygame.CloseGame();
+
 	}
 	return 0;
 }
