@@ -1,12 +1,9 @@
 #include <iostream>
-#include <cstdlib>
 #include <string>
 #include "game.h"
-#include "/home/ztyree/SoarSuite/include/sml_Client.h"
 //#include "player.h"
 //#include "cards.h"
 using namespace std;
-using namespace sml;
 
 int main(){
 	Game mygame;

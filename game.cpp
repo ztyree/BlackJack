@@ -9,37 +9,29 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
-#include "/home/ztyree/SoarSuite/include/sml_Client.h"
+#include "include/sml_Client.h"
 
 using namespace sml;
 using namespace std;
 
-Kernel* Game::createKernel() {
-  Kernel* kernel = Kernel::CreateKernelInNewThread();
-  return kernel;
+Game::Game()
+:bet_(1), winner_(kNeither), shuffle_every_round_(false), split_limit_(3), split_number_(0), current_hand_(0), double_flag_(false),surrender_flag_(false)
+{
+  pKernel = Kernel::CreateKernelInNewThread();
+  pAgent = pKernel->CreateAgent("protoBJ");
+  pAgent->LoadProductions("SOAR_Prototype/proto.soar");
+  pKernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);
 }
 
-Agent* Game::createAgent(Kernel* &kernel) {
-  Agent* agent = kernel->CreateAgent("protoBJ");
-  agent->LoadProductions(
-  "/home/ztyree/Documents/SOAR/SOAR_Prototype/proto.soar");
-  int regEvent(kernel);
-  return agent;
+void Game::handleUpdateEvent(smlUpdateEventId id, void* pUserData, Kernel* kernel, smlRunFlags runFlags) {
+  updateWorld();
 }
 
-int Game::regEvent(Kernel* &kernel, Agent* &agent) {
-  kernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);
-}
+void Game::updateWorld() {
 
-void Game::handleUpdateEvent(smlUpdateEventId id, void* pUserData, Agent* agent, smlRunFlags runFlags) {
-  updateWorld(agent);
-}
-
-void Game::updateWorld(Agent* &agent) {
-
-  int numberCommands = agent->GetNumberCommands();
+  int numberCommands = pAgent->GetNumberCommands();
   for (int i = 0; i < numberCommands; i++) {
-    Identifier* command = agent->GetCommand(i);
+    Identifier* command = pAgent->GetCommand(i);
 
     string name = command->GetCommandName();
     string decision = command->GetParameterValue("decision");
@@ -123,7 +115,6 @@ void Game::LoadConfig(){
 // Hmm, maybe I'll add some encryption feature,
 // otherwise it's just too easy for the players to cheat
 void Game::LoadGame(){
-  char soarInput;
 
 	// first try to read from save.data
 	// Hmm, maybe I'll add some encryption feature,
@@ -134,7 +125,6 @@ void Game::LoadGame(){
     StringElement* se = pAgent->CreateStringWME(pAgent->GetInputLink(), "load", "?");
     pAgent->RunSelfTilOutput();
     pAgent->DestroyWME(se);
-    cout << soarInput << endl;
 		//string input;
 		//cin>>input;
 		//prevent the ctrl+D hell
@@ -143,7 +133,7 @@ void Game::LoadGame(){
 			std::exit(EXIT_FAILURE);
 		}
 /*
-		if(soarInput.compare("y")==0){
+		if(input.compare("y")==0){
 			// User chooses to load saved game
 			ifstream file("save.dat");
 			if(file.good()){
@@ -751,9 +741,6 @@ void Game::PrintChipStatus(){
 
 // prompt whether to exit. if player chooses to exit, return true
 bool Game::PromptExit(){
-  char soarInput;
-  pKernel->RegisterForUpdateEvent(
-    smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, &soarInput);
 	// prompt exit
 	// also let the player set a new bet if he chooses to contunue
 	int bet;
@@ -763,7 +750,6 @@ bool Game::PromptExit(){
     StringElement* se = pAgent->CreateStringWME(pAgent->GetInputLink(), "bet", "?");
     pAgent->RunSelfTilOutput();
     pAgent->DestroyWME(se);
-    cout << soarInput << endl;
     //cin>>input;
     // prevent the ctrl+D hell
 		if(cin.eof()){

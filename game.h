@@ -96,13 +96,13 @@ private:
 	void SetWinner_WinningRate(Hand_Status & h_status);
 
 public:
-	Kernel* createKernel();
-	Agent* createAgent(Kernel* &kernel);
-	void updateWorld(Agent* &agent);
-	void handleUpdateEvent(smlUpdateEventId id, void* pUserData, Agent* agent, smlRunFlags runFlags);
-	int regEvent(smlUpdateEventId id, void handler, NULL);
+	Kernel* pKernel;
+	Agent* pAgent;
 
-	Game():bet_(1), winner_(kNeither), shuffle_every_round_(false), split_limit_(3), split_number_(0), current_hand_(0), double_flag_(false),surrender_flag_(false){}
+	Game();
+
+	void updateWorld();
+	void handleUpdateEvent(smlUpdateEventId id, void* pUserData, Kernel* kernel, smlRunFlags runFlags);
 
 	// load the game configuration file
 	// if file not found, use the default setting
