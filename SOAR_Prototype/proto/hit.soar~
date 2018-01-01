@@ -1,0 +1,8 @@
+sp {propose*hit
+   (state <s> ^name proto
+              ^io.input-link <il>)
+   (<il> ^cards.sum { <sum> < 17 })
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name hit
+        ^actions.loopDecision h)}

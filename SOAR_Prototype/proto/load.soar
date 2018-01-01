@@ -1,0 +1,7 @@
+sp {propose*load
+   (state <s> ^name proto
+              ^io.input-link.load ?)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name load
+        ^actions.load n)}

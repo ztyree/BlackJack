@@ -1,0 +1,15 @@
+sp {apply*operator*createAction
+   (state <s> ^operator.actions.<att> <val>
+              ^io.output-link <out>)
+-->
+   (<out> ^<att> <c>)
+   (<c> ^decision <val>)
+   (write (crlf) <val>)}
+
+sp {apply*operator*removeAction
+   (state <s> ^operator.actions
+              ^io.output-link <out>)
+   (<out> ^<att> <c>)
+   (<c> ^status complete)
+-->
+   (<out> ^<att> <c> -)}

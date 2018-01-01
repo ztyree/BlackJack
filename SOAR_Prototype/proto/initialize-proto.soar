@@ -1,0 +1,14 @@
+sp {propose*initialize-proto
+   (state <s> ^superstate nil
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-proto)
+}
+
+sp {apply*initialize-proto
+   (state <s> ^operator <op>)
+   (<op> ^name initialize-proto)
+-->
+   (<s> ^name proto)}
+
