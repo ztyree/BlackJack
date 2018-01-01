@@ -14,6 +14,11 @@
 using namespace sml;
 using namespace std;
 
+
+void handleUpdateEvent(smlUpdateEventId id, void* pUserData, Kernel* kernel, smlRunFlags runFlags) {
+  static_cast<Game *>(pUserData)->updateWorld();
+}
+
 Game::Game()
 :bet_(1), winner_(kNeither), shuffle_every_round_(false), split_limit_(3), split_number_(0), current_hand_(0), double_flag_(false),surrender_flag_(false)
 {
@@ -21,10 +26,6 @@ Game::Game()
   pAgent = pKernel->CreateAgent("protoBJ");
   pAgent->LoadProductions("SOAR_Prototype/proto.soar");
   pKernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);
-}
-
-void Game::handleUpdateEvent(smlUpdateEventId id, void* pUserData, Kernel* kernel, smlRunFlags runFlags) {
-  updateWorld();
 }
 
 void Game::updateWorld() {

@@ -102,7 +102,6 @@ public:
 	Game();
 
 	void updateWorld();
-	void handleUpdateEvent(smlUpdateEventId id, void* pUserData, Kernel* kernel, smlRunFlags runFlags);
 
 	// load the game configuration file
 	// if file not found, use the default setting
