@@ -371,12 +371,10 @@ bool Game::PlayerLoop(){
     Identifier* dCards = pAgent->CreateIdWME(
       pAgent->GetInputLink(), "dCards");
     IntElement* dCard = pAgent->CreateIntWME(
-      dCards, "dCard", dealer_.getNthCardNum(0));
+      dCards, "card", dealer_.getNthCardNum(0));
     Identifier* pCards = pAgent->CreateIdWME(pAgent->GetInputLink(), "cards");
     IntElement* pSum = pAgent->CreateIntWME(pCards, "sum", player_.MaxSum());
-    if (player_.IsSumSoft() == 1) {
-      IntElement* pSoft = pAgent->CreateIntWME(pCards, "soft", player_.IsSumSoft());
-    }
+    IntElement* pSoft = pAgent->CreateIntWME(pCards, "soft", player_.IsSumSoft());
 
 		bool invalid_input = true;
 		string input;
