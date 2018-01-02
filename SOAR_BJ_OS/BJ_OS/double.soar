@@ -5,4 +5,4 @@ sp {propose*double
 -->
    (<s> ^operator <o> +)
    (<o> ^name double
-        ^actions.double d)}
+        ^actions.loopDecision d)}

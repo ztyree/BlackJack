@@ -5,4 +5,4 @@ sp {propose*surrender
 -->
    (<s> ^operator <o> +)
    (<o> ^name surrender
-        ^actions.surrender r)}
+        ^actions.loopDecision r)}
