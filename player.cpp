@@ -87,6 +87,10 @@ int Player::MaxSum() const {
 	return status_.max_sum;
 }
 
+int Player::IsSumSoft() {
+	return status_.is_sum_soft;
+}
+
 int Player::GetChips(){
 	return chips_in_hand_;
 }

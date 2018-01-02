@@ -59,6 +59,8 @@ public:
 	// Get the Max sum of the cards from Status
 	int MaxSum() const;
 
+	int IsSumSoft();
+
 
 	// Return the current chips left for the player
 	int GetChips();
