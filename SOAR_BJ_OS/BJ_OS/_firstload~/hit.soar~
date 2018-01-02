@@ -1,9 +1,0 @@
-sp {propose*hit
-   (state <s> ^name proto
-              ^io.input-link <il>)
-   (<il> ^sum { <sum> < 17 })
--->
-   (<s> ^operator <o> + >)
-   (<o> ^name hit
-        ^actions <a>)
-   (<a> ^hit h)}
