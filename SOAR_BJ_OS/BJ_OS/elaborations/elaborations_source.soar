@@ -1,0 +1,9 @@
+source _all.soar
+source actions.soar
+source selectBet.soar
+source selectHard.soar
+source selectInsurance.soar
+source selectLoad.soar
+source selectSoft.soar
+source selectSplit.soar
+source top-state.soar

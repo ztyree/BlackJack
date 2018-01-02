@@ -1,0 +1,7 @@
+sp {select*insurance
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name insuranceYes)
+   (<o2> ^name insuranceNo)
+-->
+   (<s> ^operator <o2> > <o1>)}

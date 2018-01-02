@@ -1,0 +1,8 @@
+sp {select*bet1Best&BetterBet2
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name bet2)
+   (<o2> ^name bet1)
+-->
+   (<s> ^operator <o2> > <o1>
+        ^operator <o2> >)}

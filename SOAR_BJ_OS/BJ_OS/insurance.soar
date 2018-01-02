@@ -1,0 +1,15 @@
+sp {propose*insuranceYes
+   (state <s> ^name BJ_OS
+              ^io.input-link.insurance 1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name insuranceYes
+        ^actions.insurance y)}
+
+sp {propose*insuranceNo
+   (state <s> ^name BJ_OS
+              ^io.input-link.insurance 1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name insuranceNo
+        ^actions.insurance n)}

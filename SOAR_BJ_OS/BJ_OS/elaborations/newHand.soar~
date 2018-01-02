@@ -1,0 +1,3 @@
+sp {elaborate*newHand
+   (state <s> ^name BJ_OS
+              ^io.input-link.

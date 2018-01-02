@@ -1,0 +1,7 @@
+sp {propose*split
+   (state <s> ^name  BJ_OS
+              ^io.input-link.split 1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name split
+        ^actions.loopDecision t)}

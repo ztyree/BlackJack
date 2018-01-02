@@ -1,4 +1,0 @@
-source _all.soar
-source actions.soar
-source psuedoInput.soar
-source top-state.soar
