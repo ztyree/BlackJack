@@ -26,6 +26,7 @@ Game::Game()
   pAgent = pKernel->CreateAgent("BJ_OS");
   pAgent->LoadProductions("SOAR_BJ_OS/BJ_OS.soar");
   pKernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);
+  pChips = pAgent->CreateIntWME(pAgent->GetInputLink(), "chips", -1);
 }
 
 void Game::updateWorld() {
@@ -39,7 +40,7 @@ void Game::updateWorld() {
 
     command->AddStatusComplete();
 
-		cout << endl << "***" << current_decision_ << "***" << endl;
+		cout << endl << "*** " << current_decision_ << " ***" << endl;
   }
 }
 
@@ -183,6 +184,7 @@ void Game::SetBet(int bet){
 
 // determine whether someone is running out of money
 bool Game::MoneyOut(){
+  pAgent->Update(pChips, player_.GetChips());
 	if(player_.GetChips()<=0){
 		cout<<"You have no money left. Game Over."<<endl;
 		// save the game status
@@ -810,10 +812,13 @@ bool Game::PromptExit(){
 	int bet;
 	while(true){
 		cout << endl<<"Enter your bet(enter x to exit game),";
+    //bool oneChip = (player_.GetChips() == 1);
 
     IntElement* pBet = pAgent->CreateIntWME(pAgent->GetInputLink(), "bet", 1);
+    //IntElement* pOneChip = pAgent->CreateIntWME(pAgent->GetInputLink(), "oneChip", oneChip);
     pAgent->RunSelfTilOutput();
     pAgent->DestroyWME(pBet);
+    //pAgent->DestroyWME(oneChip)
 
     string input = current_decision_;
     //cin>>input;

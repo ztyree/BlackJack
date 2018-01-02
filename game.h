@@ -101,6 +101,7 @@ private:
 public:
 	Kernel* pKernel;
 	Agent* pAgent;
+	IntElement* pChips;
 
 	Game();
 
