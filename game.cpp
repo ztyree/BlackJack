@@ -751,16 +751,16 @@ bool Game::PromptExit(){
     StringElement* se = pAgent->CreateStringWME(pAgent->GetInputLink(), "bet", "?");
     pAgent->RunSelfTilOutput();
     pAgent->DestroyWME(se);
+
     string input = current_decision_;
-    cout << player_.getNthCardNum(0) << endl;
-    cin>>input;
+    //cin>>input;
     // prevent the ctrl+D hell
 		if(cin.eof()){
 			cout << "Hate ctrl-D hell\n";
 			std::exit(EXIT_FAILURE);
 		}
-		//stringstream s(input);
-    /*
+		stringstream s(input);
+
 		if(!(s>>bet)){
 			// the player entered a non-integer
 			if(s.str().compare("x")==0){
@@ -770,11 +770,9 @@ bool Game::PromptExit(){
 			}
 			cout<<"I didn't get that. Please enter an integer"<<endl;
 		}
-    */
+
 		// the player entered a valid integer
 		// still need to check whether it's a valid bet
-/*
-    bet = atoi(input.c_str());
 		if(bet<=0){
 			cout<<"You must must bet at least 1 chip each hand!"<<endl;
 		}
@@ -782,7 +780,6 @@ bool Game::PromptExit(){
 			cout<<"You must bet within your budget!"<<endl;
 		}
 		else break;
-*/
 	}
 	SetBet(bet);
 	cout <<endl;
