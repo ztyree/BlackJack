@@ -38,6 +38,8 @@ public:
 	// When a Player is initialized, set the chips to the default number
 	Player():chips_in_hand_(kPlayerChips){}
 
+	int getNthCardNum(int n);
+
 	// After each hand, the cards need to be cleared
 	void ClearCards();
 

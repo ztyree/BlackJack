@@ -35,14 +35,14 @@ void Game::updateWorld() {
     Identifier* command = pAgent->GetCommand(i);
 
     string name = command->GetCommandName();
-    string decision = command->GetParameterValue("decision");
+    current_decision_ = command->GetParameterValue("decision");
 
     command->AddStatusComplete();
 
 		if (name == "bet") {
-			cout << endl << (atoi(decision.c_str())) << endl;
+			cout << endl << (atoi(current_decision_.c_str())) << endl;
 		} else if (name == "load") {
-			cout << endl << decision << endl;
+			cout << endl << current_decision_ << endl;
 		}
   }
 }
@@ -126,14 +126,14 @@ void Game::LoadGame(){
     StringElement* se = pAgent->CreateStringWME(pAgent->GetInputLink(), "load", "?");
     pAgent->RunSelfTilOutput();
     pAgent->DestroyWME(se);
-		//string input;
+		string input = current_decision_;
 		//cin>>input;
 		//prevent the ctrl+D hell
 		if(cin.eof()){
 			cout << "Hate ctrl-D hell\n";
 			std::exit(EXIT_FAILURE);
 		}
-/*
+
 		if(input.compare("y")==0){
 			// User chooses to load saved game
 			ifstream file("save.dat");
@@ -170,7 +170,7 @@ void Game::LoadGame(){
 			cout<<"I didn't get that."<<endl;
 
 		}
-*/
+
 	}
 	PrintChipStatus();
 	return;
@@ -751,7 +751,9 @@ bool Game::PromptExit(){
     StringElement* se = pAgent->CreateStringWME(pAgent->GetInputLink(), "bet", "?");
     pAgent->RunSelfTilOutput();
     pAgent->DestroyWME(se);
-    //cin>>input;
+    string input = current_decision_;
+    cout << player_.getNthCardNum(0) << endl;
+    cin>>input;
     // prevent the ctrl+D hell
 		if(cin.eof()){
 			cout << "Hate ctrl-D hell\n";

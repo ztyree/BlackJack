@@ -35,6 +35,9 @@ private:
 	int current_hand_;
 
 
+	string current_decision_;
+
+
 	 // this struct is to describe the status of each hand after split(s)
 	struct Hand_Status{
 		Player hand;
