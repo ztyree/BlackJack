@@ -184,6 +184,9 @@ void Game::SetBet(int bet){
 
 // determine whether someone is running out of money
 bool Game::MoneyOut(){
+  ofstream myfile("tracker.dat", ios_base::app | ios_base::out);
+ 	myfile << player_.GetChips() << endl;
+ 	myfile.close();
   pAgent->Update(pChips, player_.GetChips());
 	if(player_.GetChips()<=0){
 		cout<<"You have no money left. Game Over."<<endl;
