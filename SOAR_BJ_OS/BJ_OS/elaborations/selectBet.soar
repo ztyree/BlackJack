@@ -1,5 +1,6 @@
 sp {select*bet1Best
    (state <s> ^operator <o> +)
-   (<o> ^name bet1)
+   (<o> ^name bet
+        ^actions.bet 1)
 -->
    (<s> ^operator <o> >)}

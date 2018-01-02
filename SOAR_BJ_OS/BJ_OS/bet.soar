@@ -5,7 +5,7 @@ sp {propose*bet1
          ^chips 1)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet1
+   (<o> ^name bet
         ^actions.bet 1)}
 
 sp {propose*bet2
@@ -15,7 +15,7 @@ sp {propose*bet2
          ^chips >= 2)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet2
+   (<o> ^name bet
         ^actions.bet 2)}
 
 sp {propose*bet4
@@ -25,7 +25,7 @@ sp {propose*bet4
          ^chips >= 4)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet4
+   (<o> ^name bet
         ^actions.bet 4)}
 
 sp {propose*bet6
@@ -35,7 +35,7 @@ sp {propose*bet6
          ^chips >= 6)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet6
+   (<o> ^name bet
         ^actions.bet 6)}
 
 sp {propose*bet8
@@ -45,7 +45,7 @@ sp {propose*bet8
          ^chips >= 8)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet8
+   (<o> ^name bet
         ^actions.bet 8)}
 
 sp {propose*bet10
@@ -55,7 +55,7 @@ sp {propose*bet10
          ^chips >= 10)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet10
+   (<o> ^name bet
         ^actions.bet 10)}
 
 sp {propose*bet12
@@ -65,7 +65,7 @@ sp {propose*bet12
          ^chips >= 12)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet12
+   (<o> ^name bet
         ^actions.bet 12)}
 
 sp {propose*bet14
@@ -75,7 +75,7 @@ sp {propose*bet14
          ^chips >= 14)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet14
+   (<o> ^name bet
         ^actions.bet 14)}
 
 sp {propose*bet16
@@ -85,7 +85,7 @@ sp {propose*bet16
          ^chips >= 16)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet16
+   (<o> ^name bet
         ^actions.bet 16)}
 
 sp {propose*bet18
@@ -95,7 +95,7 @@ sp {propose*bet18
          ^chips >= 18)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet18
+   (<o> ^name bet
         ^actions.bet 18)}
 
 sp {propose*bet20
@@ -105,7 +105,7 @@ sp {propose*bet20
          ^chips >= 20)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet20
+   (<o> ^name bet
         ^actions.bet 20)}
 
 sp {propose*bet22
@@ -115,7 +115,7 @@ sp {propose*bet22
          ^chips >= 22)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet22
+   (<o> ^name bet
         ^actions.bet 22)}
 
 sp {propose*bet24
@@ -125,7 +125,7 @@ sp {propose*bet24
          ^chips >= 24)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet24
+   (<o> ^name bet
         ^actions.bet 24)}
 
 sp {propose*bet26
@@ -135,7 +135,7 @@ sp {propose*bet26
          ^chips >= 26)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet26
+   (<o> ^name bet
         ^actions.bet 26)}
 
 sp {propose*bet28
@@ -145,7 +145,7 @@ sp {propose*bet28
          ^chips >= 28)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet28
+   (<o> ^name bet
         ^actions.bet 28)}
 
 sp {propose*bet30
@@ -155,7 +155,7 @@ sp {propose*bet30
          ^chips >= 30)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet30
+   (<o> ^name bet
         ^actions.bet 30)}
 
 sp {propose*bet32
@@ -165,5 +165,5 @@ sp {propose*bet32
          ^chips >= 32)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name bet32
+   (<o> ^name bet
         ^actions.bet 32)}

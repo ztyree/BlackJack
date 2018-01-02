@@ -22,7 +22,7 @@ void handleUpdateEvent(smlUpdateEventId id, void* pUserData, Kernel* kernel, sml
 Game::Game()
 :bet_(1), winner_(kNeither), shuffle_every_round_(false), split_limit_(3), split_number_(0), current_hand_(0), double_flag_(false),surrender_flag_(false)
 {
-  pKernel = Kernel::CreateRemoteConnection();
+  pKernel = Kernel::CreateKernelInNewThread();
   pAgent = pKernel->CreateAgent("BJ_OS");
   pAgent->LoadProductions("SOAR_BJ_OS/BJ_OS.soar");
   pKernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);

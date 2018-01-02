@@ -11,4 +11,3 @@ sp {apply*initialize-BJ_OS
    (<op> ^name initialize-BJ_OS)
 -->
    (<s> ^name BJ_OS)}
-

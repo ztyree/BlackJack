@@ -1,7 +1,9 @@
 sp {select*load
    (state <s> ^operator <o1> +
               ^operator <o2> +)
-   (<o1> ^name loadYes)
-   (<o2> ^name loadNo)
+   (<o1> ^name load
+         ^actions.load y)
+   (<o2> ^name load
+         ^actions.load n)
 -->
    (<s> ^operator <o2> > <o1>)}

@@ -1,10 +1,10 @@
 sp {propose*insuranceYes
    (state <s> ^name BJ_OS
               ^io.input-link.insurance 1
-             -^io.input-link.chips 1)
+              ^io.input-link.chips <> 1)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name insuranceYes
+   (<o> ^name insurance
         ^actions.insurance y)}
 
 sp {propose*insuranceNo
@@ -12,5 +12,5 @@ sp {propose*insuranceNo
               ^io.input-link.insurance 1)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name insuranceNo
+   (<o> ^name insurance
         ^actions.insurance n)}

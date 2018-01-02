@@ -1,10 +1,75 @@
-sp {select*template
-   :template
-   (state <s> ^operator <o> +
+gp {gen*hit
+   (state <s> ^name BJ_OS
+              ^operator <o> +
               ^io.input-link <il>)
-   (<il> ^cards.sum <sum>
-         ^cards.soft <soft>
-         ^dCards.card <dC>)
-  (<o> ^name << hit stand double split surrender insuranceYes insuranceNo >>)
+   (<il> ^cards <cards>
+         ^dCards.card [1 2 3 4 5 6 7 8 9 10 11 12 13])
+   (<cards> ^sum [2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]
+            ^soft [0 1])
+   (<o> ^name hit)
 -->
-   (<s> ^operator <o> = 0)}
+   (<s> ^operator <o> = 0.)}
+
+gp {gen*stand
+   (state <s> ^name BJ_OS
+              ^operator <o> +
+              ^io.input-link <il>)
+   (<il> ^cards <cards>
+         ^dCards.card [1 2 3 4 5 6 7 8 9 10 11 12 13])
+   (<cards> ^sum [2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]
+            ^soft [0 1])
+   (<o> ^name stand)
+-->
+   (<s> ^operator <o> = 0.)}
+
+gp {gen*double
+   (state <s> ^name BJ_OS
+              ^operator <o> +
+              ^io.input-link <il>)
+   (<il> ^cards <cards>
+         ^dCards.card [1 2 3 4 5 6 7 8 9 10 11 12 13])
+   (<cards> ^sum [2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]
+            ^soft [0 1])
+   (<o> ^name double)
+-->
+   (<s> ^operator <o> = 0.)}
+
+gp {gen*split
+   (state <s> ^name BJ_OS
+              ^operator <o> +
+              ^io.input-link <il>)
+   (<il> ^cards <cards>
+         ^dCards.card [1 2 3 4 5 6 7 8 9 10 11 12 13])
+   (<cards> ^sum [2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]
+            ^soft [0 1])
+   (<o> ^name split)
+-->
+   (<s> ^operator <o> = 0.)}
+
+gp {gen*surrender
+   (state <s> ^name BJ_OS
+              ^operator <o> +
+              ^io.input-link <il>)
+   (<il> ^cards <cards>
+         ^dCards.card [1 2 3 4 5 6 7 8 9 10 11 12 13])
+   (<cards> ^sum [2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]
+            ^soft [0 1])
+   (<o> ^name surrender)
+-->
+   (<s> ^operator <o> = 0.)}
+
+gp {gen*insurance
+   (state <s> ^name BJ_OS
+              ^operator <o> +)
+   (<o> ^name insurance
+        ^actions.insurance [n y])
+-->
+   (<s> ^operator <o> = 0.)}
+
+gp {gen*bet
+   (state <s> ^name BJ_OS
+              ^operator <o> +)
+   (<o> ^name bet
+        ^actions.bet [2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32])
+-->
+   (<s> ^operator <o> = 0.)}

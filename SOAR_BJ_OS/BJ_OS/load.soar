@@ -3,7 +3,7 @@ sp {propose*loadYes
               ^io.input-link.load 1)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name loadYes
+   (<o> ^name load
         ^actions.load y)}
 
 sp {propose*loadNo
@@ -11,6 +11,6 @@ sp {propose*loadNo
               ^io.input-link.load 1)
 -->
    (<s> ^operator <o> +)
-   (<o> ^name loadNo
+   (<o> ^name load
         ^actions.load n)}
 
