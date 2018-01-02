@@ -2,7 +2,7 @@ sp {select*hit*hard*less9
    (state <s> ^operator <o> +
               ^io.input-link.cards <cards>)
    (<cards> ^sum < 9
-           -^soft)
+           ^soft 0)
    (<o> ^name hit)
 -->
    (<s> ^operator <o> >)}
@@ -13,7 +13,7 @@ sp {select*hit*hard*dealerNOT3-6*9
               ^io.input-link.dCards <dCards>)
    (<o> ^name hit)
    (<cards> ^sum 9
-           -^soft)
+           ^soft 0)
   -(<dCards> ^card << 3 4 5 6 >>)
 -->
    (<s> ^operator <o> >)}
@@ -24,7 +24,7 @@ sp {select*double*hard*dealer3-6*9
               ^io.input-link.dCards <dCards>)
    (<o> ^name double)
    (<cards> ^sum 9
-           -^soft)
+           ^soft 0)
    (<dCards> ^card << 3 4 5 6 >>)
 -->
    (<s> ^operator <o> >)}
@@ -35,7 +35,7 @@ sp {select*hit*hard*dealer10-A*10
               ^io.input-link.dCards <dCards>)
    (<o> ^name hit)
    (<cards> ^sum 10
-           -^soft)
+           ^soft 0)
    (<dCards> ^card << 10 11 12 13 1 >>)
 -->
    (<s> ^operator <o> >)}
@@ -46,7 +46,7 @@ sp {select*double*hard*dealerNOT10-A*10
               ^io.input-link.dCards <dCards>)
    (<o> ^name double)
    (<cards> ^sum 10
-           -^soft)
+           ^soft 0)
   -(<dCards> ^card << 10 11 12 13 1 >>)
 -->
    (<s> ^operator <o> >)}
@@ -56,7 +56,7 @@ sp {select*double*hard*11
               ^io.input-link.cards <cards>)
    (<o> ^name double)
    (<cards> ^sum 11
-           -^soft)
+           ^soft 0)
 -->
    (<s> ^operator <o> >)}
 
@@ -67,7 +67,7 @@ sp {select*stand*hard*dealerLess7*greater11
               ^io.input-link.dCards.card << 2 3 4 5 6 >>)
    (<o> ^name stand)
    (<cards> ^sum > 11
-            -^soft)
+            ^soft 0)
 -->
    (<s> ^operator <o> >)}
 
@@ -79,7 +79,7 @@ sp {select*hitBest&BetterStand*hard*dealer2-3*12
    (<o1> ^name stand)
    (<o2> ^name hit)
    (<cards> ^sum 12
-            -^soft)
+            ^soft 0)
 -->
    (<s> ^operator <o2> > <o1>
         ^operator <o2> >)}
@@ -90,7 +90,7 @@ sp {select*hit*hard*dealerGreater6*greater11*less17
               ^io.input-link.dCards.card << 1 7 8 9 10 11 12 13 >>)
    (<o> ^name hit)
    (<cards> ^sum { > 11 < 17 }
-           -^soft)
+           ^soft 0)
 -->
    (<s> ^operator <o> >)}
 
@@ -102,7 +102,7 @@ sp {select*surrenderBest&BetterHit*hard*dealer10-A*15-16
    (<o1> ^name hit)
    (<o2> ^name surrender)
    (<cards> ^sum << 15 16 >>
-           -^soft)
+           ^soft 0)
 -->
    (<s> ^operator <o2> > <o1>
         ^operator <o2> >)}
@@ -115,7 +115,7 @@ sp {select*surrenderBest&BetterHit*hard*dealer9*16
    (<o1> ^name hit)
    (<o2> ^name surrender)
    (<cards> ^sum 16
-           -^soft)
+           ^soft 0)
 -->
    (<s> ^operator <o2> > <o1>
         ^operator <o2> >)}
@@ -125,7 +125,7 @@ sp {select*stand*hard*greater16
               ^io.input-link.cards <cards>)
    (<o> ^name stand)
    (<cards> ^sum > 16
-          -^soft)
+          ^soft 0)
 -->
    (<s> ^operator <o> >)}
 
@@ -137,7 +137,7 @@ sp {select*surrenderBest&BetterStand*hard*dealerA*17
    (<o1> ^name stand)
    (<o2> ^name surrender)
    (<cards> ^sum 17
-           -^soft)
+           ^soft 0)
 -->
    (<s> ^operator <o2> > <o1>
         ^operator <o2> >)}

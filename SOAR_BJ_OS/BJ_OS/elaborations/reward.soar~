@@ -1,0 +1,6 @@
+sp {elaborate*profit*reward
+   (state <s> ^name BJ_OS
+              ^reward-link <rl>
+              ^io.input-link.profit <p>)
+-->
+   (<rl> ^reward.value <p>)}

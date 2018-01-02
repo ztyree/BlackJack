@@ -1,0 +1,10 @@
+sp {select*template
+   :template
+   (state <s> ^operator <o> +
+              ^io.input-link <il>)
+   (<il> ^cards.sum <sum>
+         ^cards.soft <soft>
+         ^dCards.card <dC>)
+  -(<o> ^name << bet1 loadYes loadNo >>)
+-->
+   (<s> ^operator <o> = 0)}

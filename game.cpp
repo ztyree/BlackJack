@@ -22,7 +22,7 @@ void handleUpdateEvent(smlUpdateEventId id, void* pUserData, Kernel* kernel, sml
 Game::Game()
 :bet_(1), winner_(kNeither), shuffle_every_round_(false), split_limit_(3), split_number_(0), current_hand_(0), double_flag_(false),surrender_flag_(false)
 {
-  pKernel = Kernel::CreateKernelInNewThread();
+  pKernel = Kernel::CreateRemoteConnection();
   pAgent = pKernel->CreateAgent("BJ_OS");
   pAgent->LoadProductions("SOAR_BJ_OS/BJ_OS.soar");
   pKernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);
@@ -271,12 +271,20 @@ WHO Game::StartGame(){
               player_.CloseMoney(ins_profit);
               dealer_.CloseMoney(- ins_profit);
               cout << "You win "<<ins_profit<<" chips."<<endl;
+              IntElement* pProfit = pAgent->CreateIntWME(
+                pAgent->GetInputLink(), "profit", ins_profit);
+              pAgent->RunSelf(2);
+              pAgent->DestroyWME(pProfit);
             }
             else {
               int ins_profit = - bet_ /2;
               player_.CloseMoney(ins_profit);
               dealer_.CloseMoney(- ins_profit);
               cout << "You lose "<<ins_profit<<" chips."<<endl;
+              IntElement* pProfit = pAgent->CreateIntWME(
+                pAgent->GetInputLink(), "profit", ins_profit);
+              pAgent->RunSelf(2);
+              pAgent->DestroyWME(pProfit);
             }
           case 'n':
             break;
@@ -752,6 +760,10 @@ void Game::CloseGame(){
 		}
 		// close the chips
 		int profit = hands_status_[i].win_rate * bet_ /2;
+    IntElement* pProfit = pAgent->CreateIntWME(
+      pAgent->GetInputLink(), "profit", profit);
+    pAgent->RunSelf(2);
+    pAgent->DestroyWME(pProfit);
 		player_.CloseMoney(profit);
 		dealer_.CloseMoney(- profit);
 		if(profit>0){
