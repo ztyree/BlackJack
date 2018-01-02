@@ -39,7 +39,7 @@ void Game::updateWorld() {
 
     command->AddStatusComplete();
 
-		cout << "***" << current_decision_ << endl;
+		cout << endl << "***" << current_decision_ << "***" << endl;
   }
 }
 
@@ -230,8 +230,12 @@ WHO Game::StartGame(){
         char input_char;
         while(invalid_input){
           cout <<"Take insurance? Yes(y) No(n)" <<endl;
-
-          cin >> input;
+          IntElement* pInsure = pAgent->CreateIntWME(
+            pAgent->GetInputLink(), "insurance", 1);
+          pAgent->RunSelfTilOutput();
+          pAgent->DestroyWME(pInsure);
+          input = current_decision_;
+          //cin >> input;
     					// prevent the ctrl+D hell
     			if(cin.eof()){
     				cout << "Hate ctrl-D hell\n";
@@ -373,8 +377,8 @@ bool Game::PlayerLoop(){
     IntElement* dCard = pAgent->CreateIntWME(
       dCards, "card", dealer_.getNthCardNum(0));
     Identifier* pCards = pAgent->CreateIdWME(pAgent->GetInputLink(), "cards");
-    IntElement* pSum = pAgent->CreateIntWME(pCards, "sum", player_.MaxSum());
-    IntElement* pSoft = pAgent->CreateIntWME(pCards, "soft", player_.IsSumSoft());
+    IntElement* pSum = pAgent->CreateIntWME(pCards, "sum", player.MaxSum());
+    IntElement* pSoft = pAgent->CreateIntWME(pCards, "soft", player.IsSumSoft());
 
 		bool invalid_input = true;
 		string input;
@@ -447,11 +451,13 @@ bool Game::PlayerLoop(){
         pAgent->DestroyWME(pStand);
 			}
 			// Get and evaluate the player's input
+      pAgent->DestroyWME(dCard);
       pAgent->DestroyWME(dCards);
+      pAgent->DestroyWME(pSum);
+      pAgent->DestroyWME(pSoft);
       pAgent->DestroyWME(pCards);
       string input = current_decision_;
-      cout << input << endl;
-			cin >> input;
+			//cin >> input;
 					// prevent the ctrl+D hell
 			if(cin.eof()){
 				cout << "Hate ctrl-D hell\n";
@@ -552,20 +558,28 @@ bool Game::PlayerLoop(){
 			// now comes the most exciting part.
 			// Split the card
 			case 't':
-				Split(current_hand_);	// in the same time split_number_ increment by 1
-				cout<<endl<<"A split is triggered.."<<endl;
-				PrintSplitted();
-				PlayerLoop();
-				end_of_player_loop=true;
-				// cout<<endl<<"Now decide on your second half,"<<endl;
-				// player_split_.PrintCards(false);
-				// splitted_loop_ = true;
-				// bool todealer2 = PlayerLoop();
-				// end_of_player_loop=true;
-				// // if the player busted himself for twice
-				// // then no need to enter the dealer's loop
-				// if(!todealer1 && !todealer2)	return false;
-				break;
+        if (player.MaxSum() == 12 && player.IsSumSoft()) {
+            Split(current_hand_);
+            PrintSplitted();
+            end_of_player_loop=true;
+            current_hand_ = split_number_ + 1;
+            break;
+        } else {
+            Split(current_hand_);	// in the same time split_number_ increment by 1
+            cout<<endl<<"A split is triggered.."<<endl;
+            PrintSplitted();
+            PlayerLoop();
+            end_of_player_loop=true;
+            // cout<<endl<<"Now decide on your second half,"<<endl;
+            // player_split_.PrintCards(false);
+            // splitted_loop_ = true;
+            // bool todealer2 = PlayerLoop();
+            // end_of_player_loop=true;
+            // // if the player busted himself for twice
+            // // then no need to enter the dealer's loop
+            // if(!todealer1 && !todealer2)	return false;
+            break;
+        }
 			default:
 				break;
 		}

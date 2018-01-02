@@ -67,7 +67,7 @@ void Cards::SetDeckNum(int num){
 	for(int j=0; j<=num; j++){
 		for(int i=0; i<52; i++){
       /*Card newcard(i/4+1, i%4);*/
-			Card newcard(i/4+1, i%4);
+			Card newcard(9*(i/26)+1, i%4);
 			fresh_cards_.push_back(newcard);
 		}
 
