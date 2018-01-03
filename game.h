@@ -103,6 +103,8 @@ public:
 	Agent* pAgent;
 	IntElement* pChips;
 
+	// For RL purposes
+	int cnt;
 	Game();
 
 	void updateWorld();

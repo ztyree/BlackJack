@@ -27,6 +27,7 @@ Game::Game()
   pAgent->LoadProductions("SOAR_BJ_OS/BJ_OS.soar");
   pKernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);
   pChips = pAgent->CreateIntWME(pAgent->GetInputLink(), "chips", -1);
+  int cnt = 1;
 }
 
 void Game::updateWorld() {
@@ -118,6 +119,7 @@ void Game::LoadGame(){
 	// Hmm, maybe I'll add some encryption feature,
 	// otherwise it's just too easy for the players to cheat
 	while(true){
+
 		cout<<"Load Last Saved Game?(y/n)";
 
     IntElement* pLoad = pAgent->CreateIntWME(pAgent->GetInputLink(), "load", 1);
@@ -184,9 +186,11 @@ void Game::SetBet(int bet){
 
 // determine whether someone is running out of money
 bool Game::MoneyOut(){
+  if(!cnt%500) remove("tracker.dat");
   ofstream myfile("tracker.dat", ios_base::app | ios_base::out);
  	myfile << player_.GetChips() << endl;
  	myfile.close();
+  cnt++;
   pAgent->Update(pChips, player_.GetChips());
 	if(player_.GetChips()<=0){
 		cout<<"You have no money left. Game Over."<<endl;
