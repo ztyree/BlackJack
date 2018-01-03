@@ -9,7 +9,7 @@
 #include <vector>
 
 // The initial money of the player and the dealer
-const int kPlayerChips = 100;
+const int kPlayerChips = 1000;
 const int kDealerChips = 10000;
 
 // The decision for a player/dealer after each deal

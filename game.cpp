@@ -779,7 +779,15 @@ void Game::CloseGame(){
 				cout <<" (doubled)";
 			}
 			cout << "." << endl;
+      // SO I CAN RUN FOREVER FOR RL
 
+      if (player_.GetChips() < 100) {
+          player_.SetChips(1000);
+          dealer_.SetChips(10000);
+      }
+      if (dealer_.GetChips() < 100) {
+        dealer_.SetChips(10000);
+      }
 		}
 	}
 	PrintChipStatus();

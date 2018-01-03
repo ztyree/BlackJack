@@ -1,2 +1,3 @@
 rl --set learning on
 indifferent-selection --epsilon-greedy
+rl --set update-log-path /home/ztyree/Documents/BlackJack/rl_log.txt
