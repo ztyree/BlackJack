@@ -1,0 +1,15 @@
+source _firstload.soar
+pushd all
+source all_source.soar
+popd
+pushd elaborations
+source elaborations_source.soar
+popd
+source double.soar
+source bet.soar
+source hit-stand.soar
+source initialize-BJ_OS.soar
+source insurance.soar
+source load.soar
+source split.soar
+source surrender.soar

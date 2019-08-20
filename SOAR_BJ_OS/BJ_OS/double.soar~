@@ -1,0 +1,6 @@
+sp {propose*double
+   (state <s> ^name BJ_OS
+              ^io.input-link.double 1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^actions.double d)}

@@ -1,143 +1,153 @@
-sp {propose*bet2
-   (state <s> ^name proto
+sp {propose*bet1
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1
+         ^chips 1)
 -->
-   (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<s> ^operator <o> +)
+   (<o> ^name bet1
+        ^actions.bet 1)}
+
+sp {propose*bet2
+   (state <s> ^name BJ_OS
+              ^io.input-link <il>)
+   (<il> ^bet 1)
+-->
+   (<s> ^operator <o> + >)
+   (<o> ^name bet2
         ^actions.bet 2)}
 
 sp {propose*bet4
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet4
         ^actions.bet 4)}
 
 sp {propose*bet6
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet6
         ^actions.bet 6)}
 
 sp {propose*bet8
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet8
         ^actions.bet 8)}
 
 sp {propose*bet10
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet10
         ^actions.bet 10)}
 
 sp {propose*bet12
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet12
         ^actions.bet 12)}
 
 sp {propose*bet14
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet14
         ^actions.bet 14)}
 
 sp {propose*bet16
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet16
         ^actions.bet 16)}
 
 sp {propose*bet18
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet18
         ^actions.bet 18)}
 
 sp {propose*bet20
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet20
         ^actions.bet 20)}
 
 sp {propose*bet22
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet22
         ^actions.bet 22)}
 
 sp {propose*bet24
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet24
         ^actions.bet 24)}
 
 sp {propose*bet26
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet26
         ^actions.bet 26)}
 
 sp {propose*bet28
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet28
         ^actions.bet 28)}
 
 sp {propose*bet30
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet30
         ^actions.bet 30)}
 
 sp {propose*bet32
-   (state <s> ^name proto
+   (state <s> ^name BJ_OS
               ^io.input-link <il>)
-   (<il> ^bet ?)
+   (<il> ^bet 1)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name bet
+   (<o> ^name bet32
         ^actions.bet 32)}

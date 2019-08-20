@@ -10,6 +10,13 @@
 #include <iostream>
 using namespace std;
 
+int Player::getNthCardNum(int n) {
+	if (player_cards_.size() == 0) {
+		return 0;
+	}
+	return player_cards_[n].num;
+}
+
 // After each hand, the cards need to be cleared
 void Player::ClearCards(){
 	player_cards_.clear();
@@ -78,6 +85,10 @@ bool Player::IsBusted() const {
 // Get the Max sum of the cards from Status
 int Player::MaxSum() const {
 	return status_.max_sum;
+}
+
+int Player::IsSumSoft() {
+	return status_.is_sum_soft;
 }
 
 int Player::GetChips(){

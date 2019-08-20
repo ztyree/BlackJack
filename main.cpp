@@ -18,8 +18,8 @@ int main(){
 			// No blackjack found in  the Start Round
 			mygame.GameLoop();
 		}
-		mygame.CloseGame();	
-		
+		mygame.CloseGame();
+
 	}
 	return 0;
 }

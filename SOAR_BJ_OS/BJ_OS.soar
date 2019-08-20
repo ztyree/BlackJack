@@ -1,0 +1,3 @@
+pushd BJ_OS
+source BJ_OS_source.soar
+popd

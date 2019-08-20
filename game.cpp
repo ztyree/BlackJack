@@ -9,7 +9,40 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include "include/sml_Client.h"
+
+using namespace sml;
 using namespace std;
+
+
+void handleUpdateEvent(smlUpdateEventId id, void* pUserData, Kernel* kernel, smlRunFlags runFlags) {
+  static_cast<Game *>(pUserData)->updateWorld();
+}
+
+Game::Game()
+:bet_(1), winner_(kNeither), shuffle_every_round_(false), split_limit_(3), split_number_(0), current_hand_(0), double_flag_(false),surrender_flag_(false)
+{
+  pKernel = Kernel::CreateKernelInNewThread();
+  pAgent = pKernel->CreateAgent("BJ_OS");
+  pAgent->LoadProductions("SOAR_BJ_OS/BJ_OS.soar");
+  pKernel->RegisterForUpdateEvent(smlEVENT_AFTER_ALL_OUTPUT_PHASES, handleUpdateEvent, this);
+  pChips = pAgent->CreateIntWME(pAgent->GetInputLink(), "chips", -1);
+}
+
+void Game::updateWorld() {
+
+  int numberCommands = pAgent->GetNumberCommands();
+  for (int i = 0; i < numberCommands; i++) {
+    Identifier* command = pAgent->GetCommand(i);
+
+    string name = command->GetCommandName();
+    current_decision_ = command->GetParameterValue("decision");
+
+    command->AddStatusComplete();
+
+		cout << endl << "*** " << current_decision_ << " ***" << endl;
+  }
+}
 
 // determine whether a string is a valid number
 inline bool is_number(const std::string& s)
@@ -80,14 +113,19 @@ void Game::LoadConfig(){
 // Hmm, maybe I'll add some encryption feature,
 // otherwise it's just too easy for the players to cheat
 void Game::LoadGame(){
+
 	// first try to read from save.data
 	// Hmm, maybe I'll add some encryption feature,
 	// otherwise it's just too easy for the players to cheat
 	while(true){
 		cout<<"Load Last Saved Game?(y/n)";
-		string input;
-		cin>>input;
-		// prevent the ctrl+D hell
+
+    IntElement* pLoad = pAgent->CreateIntWME(pAgent->GetInputLink(), "load", 1);
+    pAgent->RunSelfTilOutput();
+    pAgent->DestroyWME(pLoad);
+		string input = current_decision_;
+		//cin>>input;
+		//prevent the ctrl+D hell
 		if(cin.eof()){
 			cout << "Hate ctrl-D hell\n";
 			std::exit(EXIT_FAILURE);
@@ -129,6 +167,7 @@ void Game::LoadGame(){
 			cout<<"I didn't get that."<<endl;
 
 		}
+
 	}
 	PrintChipStatus();
 	return;
@@ -145,6 +184,10 @@ void Game::SetBet(int bet){
 
 // determine whether someone is running out of money
 bool Game::MoneyOut(){
+  ofstream myfile("tracker.dat", ios_base::app | ios_base::out);
+ 	myfile << player_.GetChips() << endl;
+ 	myfile.close();
+  pAgent->Update(pChips, player_.GetChips());
 	if(player_.GetChips()<=0){
 		cout<<"You have no money left. Game Over."<<endl;
 		// save the game status
@@ -192,8 +235,12 @@ WHO Game::StartGame(){
         char input_char;
         while(invalid_input){
           cout <<"Take insurance? Yes(y) No(n)" <<endl;
-
-          cin >> input;
+          IntElement* pInsure = pAgent->CreateIntWME(
+            pAgent->GetInputLink(), "insurance", 1);
+          pAgent->RunSelfTilOutput();
+          pAgent->DestroyWME(pInsure);
+          input = current_decision_;
+          //cin >> input;
     					// prevent the ctrl+D hell
     			if(cin.eof()){
     				cout << "Hate ctrl-D hell\n";
@@ -310,8 +357,6 @@ bool Game::PlayerLoop(){
 	auto & player = (split_number_ == 0) ? player_ : hands_status_[current_hand_].hand;
 	auto & winner = (split_number_ == 0) ? winner_ : hands_status_[current_hand_].winner ;
 
-
-
 	if(split_number_){
 		// when splitted, it is possible that this loop is entered
 		// even when the player got a blackjack
@@ -332,6 +377,14 @@ bool Game::PlayerLoop(){
 		// when a player gets a blackjack, it will return kPlayer directly
 		// otherwise the dealer's loop will be entered.
 
+    Identifier* dCards = pAgent->CreateIdWME(
+      pAgent->GetInputLink(), "dCards");
+    IntElement* dCard = pAgent->CreateIntWME(
+      dCards, "card", dealer_.getNthCardNum(0));
+    Identifier* pCards = pAgent->CreateIdWME(pAgent->GetInputLink(), "cards");
+    IntElement* pSum = pAgent->CreateIntWME(pCards, "sum", player.MaxSum());
+    IntElement* pSoft = pAgent->CreateIntWME(pCards, "soft", player.IsSumSoft());
+
 		bool invalid_input = true;
 		string input;
 		char input_char;
@@ -341,26 +394,75 @@ bool Game::PlayerLoop(){
 				// double down is allowed after a split
 				// but surrender is not allowed after a split
 				if(player.CanSplit() && split_number_ < split_limit_){
-					if(split_number_==0)
-						cout << "Do you wanna Hit(h), Stand(s), DoubleDown(d), Split(t), or Surrender(r)?";
-					else
-						cout << "Do you wanna Hit(h), Stand(s), DoubleDown(d), or Split(t)?";
+					if(split_number_==0) {
+            cout << "Do you wanna Hit(h), Stand(s), DoubleDown(d), Split(t), or Surrender(r)?";
+            IntElement* pHit = pAgent->CreateIntWME(pAgent->GetInputLink(), "hit", 1);
+            IntElement* pStand = pAgent->CreateIntWME(pAgent->GetInputLink(), "stand", 1);
+            IntElement* pDouble = pAgent->CreateIntWME(pAgent->GetInputLink(), "double", 1);
+            IntElement* pSplit = pAgent->CreateIntWME(pAgent->GetInputLink(), "split", 1);
+            IntElement* pSurrender = pAgent->CreateIntWME(pAgent->GetInputLink(), "surrender", 1);
+            pAgent->RunSelfTilOutput();
+            pAgent->DestroyWME(pHit);
+            pAgent->DestroyWME(pStand);
+            pAgent->DestroyWME(pDouble);
+            pAgent->DestroyWME(pSplit);
+            pAgent->DestroyWME(pSurrender);
+          }
+					else {
+            cout << "Do you wanna Hit(h), Stand(s), DoubleDown(d), or Split(t)?";
+            IntElement* pHit = pAgent->CreateIntWME(pAgent->GetInputLink(), "hit", 1);
+            IntElement* pStand = pAgent->CreateIntWME(pAgent->GetInputLink(), "stand", 1);
+            IntElement* pDouble = pAgent->CreateIntWME(pAgent->GetInputLink(), "double", 1);
+            IntElement* pSplit = pAgent->CreateIntWME(pAgent->GetInputLink(), "split", 1);
+            pAgent->RunSelfTilOutput();
+            pAgent->DestroyWME(pHit);
+            pAgent->DestroyWME(pStand);
+            pAgent->DestroyWME(pDouble);
+            pAgent->DestroyWME(pSplit);
+          }
 				}
 				else{
 					if(split_number_==0){
 						cout<< "Do you wanna Hit(h), Stand(s), DoubleDown(d), or Surrender(r)?";
+            IntElement* pHit = pAgent->CreateIntWME(pAgent->GetInputLink(), "hit", 1);
+            IntElement* pStand = pAgent->CreateIntWME(pAgent->GetInputLink(), "stand", 1);
+            IntElement* pDouble = pAgent->CreateIntWME(pAgent->GetInputLink(), "double", 1);
+            IntElement* pSurrender = pAgent->CreateIntWME(pAgent->GetInputLink(), "surrender", 1);
+            pAgent->RunSelfTilOutput();
+            pAgent->DestroyWME(pHit);
+            pAgent->DestroyWME(pStand);
+            pAgent->DestroyWME(pDouble);
+            pAgent->DestroyWME(pSurrender);
 					}
 					else{
 						cout<< "Do you wanna Hit(h), Stand(s), or DoubleDown(d)?";
+            IntElement* pHit = pAgent->CreateIntWME(pAgent->GetInputLink(), "hit", 1);
+            IntElement* pStand = pAgent->CreateIntWME(pAgent->GetInputLink(), "stand", 1);
+            IntElement* pDouble = pAgent->CreateIntWME(pAgent->GetInputLink(), "double", 1);
+            pAgent->RunSelfTilOutput();
+            pAgent->DestroyWME(pHit);
+            pAgent->DestroyWME(pStand);
+            pAgent->DestroyWME(pDouble);
 					}
 				}
 
 			}
 			else{
 				cout<< "Do you wanna Hit(h), or Stand(s)?";
+        IntElement* pHit = pAgent->CreateIntWME(pAgent->GetInputLink(), "hit", 1);
+        IntElement* pStand = pAgent->CreateIntWME(pAgent->GetInputLink(), "stand", 1);
+        pAgent->RunSelfTilOutput();
+        pAgent->DestroyWME(pHit);
+        pAgent->DestroyWME(pStand);
 			}
 			// Get and evaluate the player's input
-			cin >> input;
+      pAgent->DestroyWME(dCard);
+      pAgent->DestroyWME(dCards);
+      pAgent->DestroyWME(pSum);
+      pAgent->DestroyWME(pSoft);
+      pAgent->DestroyWME(pCards);
+      string input = current_decision_;
+			//cin >> input;
 					// prevent the ctrl+D hell
 			if(cin.eof()){
 				cout << "Hate ctrl-D hell\n";
@@ -461,20 +563,28 @@ bool Game::PlayerLoop(){
 			// now comes the most exciting part.
 			// Split the card
 			case 't':
-				Split(current_hand_);	// in the same time split_number_ increment by 1
-				cout<<endl<<"A split is triggered.."<<endl;
-				PrintSplitted();
-				PlayerLoop();
-				end_of_player_loop=true;
-				// cout<<endl<<"Now decide on your second half,"<<endl;
-				// player_split_.PrintCards(false);
-				// splitted_loop_ = true;
-				// bool todealer2 = PlayerLoop();
-				// end_of_player_loop=true;
-				// // if the player busted himself for twice
-				// // then no need to enter the dealer's loop
-				// if(!todealer1 && !todealer2)	return false;
-				break;
+        if (player.MaxSum() == 12 && player.IsSumSoft()) {
+            Split(current_hand_);
+            PrintSplitted();
+            end_of_player_loop=true;
+            current_hand_ = split_number_ + 1;
+            break;
+        } else {
+            Split(current_hand_);	// in the same time split_number_ increment by 1
+            cout<<endl<<"A split is triggered.."<<endl;
+            PrintSplitted();
+            PlayerLoop();
+            end_of_player_loop=true;
+            // cout<<endl<<"Now decide on your second half,"<<endl;
+            // player_split_.PrintCards(false);
+            // splitted_loop_ = true;
+            // bool todealer2 = PlayerLoop();
+            // end_of_player_loop=true;
+            // // if the player busted himself for twice
+            // // then no need to enter the dealer's loop
+            // if(!todealer1 && !todealer2)	return false;
+            break;
+        }
 			default:
 				break;
 		}
@@ -702,17 +812,26 @@ void Game::PrintChipStatus(){
 bool Game::PromptExit(){
 	// prompt exit
 	// also let the player set a new bet if he chooses to contunue
-	string input;
 	int bet;
 	while(true){
 		cout << endl<<"Enter your bet(enter x to exit game),";
-		cin>>input;
-		// prevent the ctrl+D hell
+    //bool oneChip = (player_.GetChips() == 1);
+
+    IntElement* pBet = pAgent->CreateIntWME(pAgent->GetInputLink(), "bet", 1);
+    //IntElement* pOneChip = pAgent->CreateIntWME(pAgent->GetInputLink(), "oneChip", oneChip);
+    pAgent->RunSelfTilOutput();
+    pAgent->DestroyWME(pBet);
+    //pAgent->DestroyWME(oneChip)
+
+    string input = current_decision_;
+    //cin>>input;
+    // prevent the ctrl+D hell
 		if(cin.eof()){
 			cout << "Hate ctrl-D hell\n";
 			std::exit(EXIT_FAILURE);
 		}
 		stringstream s(input);
+
 		if(!(s>>bet)){
 			// the player entered a non-integer
 			if(s.str().compare("x")==0){
@@ -722,17 +841,16 @@ bool Game::PromptExit(){
 			}
 			cout<<"I didn't get that. Please enter an integer"<<endl;
 		}
-		else{
-			// the player entered a valid integer
-			// still need to check whether it's a valid bet
-			if(bet<=0){
-				cout<<"You must must bet at least 1 chip each hand!"<<endl;
-			}
-			else if(bet>player_.GetChips()){
-				cout<<"You must bet within your budget!"<<endl;
-			}
-			else break;
+
+		// the player entered a valid integer
+		// still need to check whether it's a valid bet
+		if(bet<=0){
+			cout<<"You must must bet at least 1 chip each hand!"<<endl;
 		}
+		else if(bet>player_.GetChips()){
+			cout<<"You must bet within your budget!"<<endl;
+		}
+		else break;
 	}
 	SetBet(bet);
 	cout <<endl;

@@ -1,0 +1,16 @@
+sp {propose*loadYes
+   (state <s> ^name BJ_OS
+              ^io.input-link.load 1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name loadYes
+        ^actions.load y)}
+
+sp {propose*loadNo
+   (state <s> ^name BJ_OS
+              ^io.input-link.load 1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name loadNo
+        ^actions.load n)}
+

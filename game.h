@@ -3,6 +3,10 @@
 
 // Provide a class to simulate all the processes in a hand of the game
 #include "player.h"
+#include "/home/ztyree/SoarSuite/include/sml_Client.h"
+
+
+using namespace sml;
 
 enum GAMEMODE { kPlayerVSDealer=0, kSuperGamblerVSDealer};
 enum WHO{ kDealer=0, kPlayer, kBoth, kNeither};
@@ -29,6 +33,9 @@ private:
 	// the current hand of all the splitted ones
 	// this is to inform the playerloop which hand is active now
 	int current_hand_;
+
+
+	string current_decision_;
 
 
 	 // this struct is to describe the status of each hand after split(s)
@@ -92,7 +99,13 @@ private:
 	void SetWinner_WinningRate(Hand_Status & h_status);
 
 public:
-	Game():bet_(1), winner_(kNeither), shuffle_every_round_(false), split_limit_(3), split_number_(0), current_hand_(0), double_flag_(false),surrender_flag_(false){}
+	Kernel* pKernel;
+	Agent* pAgent;
+	IntElement* pChips;
+
+	Game();
+
+	void updateWorld();
 
 	// load the game configuration file
 	// if file not found, use the default setting

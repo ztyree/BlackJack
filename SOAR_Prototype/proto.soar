@@ -1,3 +1,0 @@
-pushd proto
-source proto_source.soar
-popd

@@ -1,0 +1,16 @@
+sp {propose*hit
+   (state <s> ^name BJ_OS
+              ^io.input-link.hit 1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name hit
+        ^actions.loopDecision h)}
+
+sp {propose*stand
+   (state <s> ^name BJ_OS
+              ^io.input-link.stand 1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name stand
+        ^actions.loopDecision s)}
+
